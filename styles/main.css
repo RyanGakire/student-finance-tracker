@@ -1,0 +1,78 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+:root {
+	--text: #1f2937;
+	--bg: #ffda1f;
+	--accent: #2563eb;
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-size: 1rem;
+	line-height: 1.6;
+	color: var(--text);
+	background-color: var(--bg);
+	transition: background-color 0.2s;
+}
+
+a {
+	color: var(--accent);
+}
+
+.skip-link {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	z-index: 1000;
+	padding: 0.5rem 1rem;
+	background-color: #fff;
+	transform: translateY(calc(-100% - 1rem));
+}
+
+.skip-link:focus {
+	transform: translateY(0);
+}
+
+:is(a, button, input):focus-visible {
+	outline: 3px solid var(--accent);
+	outline-offset: 3px;
+}
+
+main {
+	max-width: 70rem;
+	margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+	main {
+		padding-inline: 2rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	main {
+		padding-inline: 4rem;
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.chart-form-layout {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem;
+		align-items: start;
+	}
+}
