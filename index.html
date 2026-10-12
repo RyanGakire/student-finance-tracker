@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Finance Tracker</title>
     <link rel="stylesheet" href="styles/main.css">
-    <script src="scripts/main.js" defer type="module"></script>
+    <script src="scripts/main.js" type="module"></script>
 </head>
 
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
     <header>
-        <h1>StuFina! Tracker</h1>
+        <h1>StuFina Tracker</h1>
         <nav>
             <ul>
                 <li><a href="#dashboard">Dashboard</a></li>
@@ -21,34 +21,155 @@
                 <li><a href="#settings">Settings</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
+        </nav>
     </header>
     <main id="main">
         <section id="dashboard" aria-labelledby="dashboard-heading">
             <h2 id="dashboard-heading">Dashboard</h2>
-            <p>Here you can see an overview of your financial status.</p>
+            <div class="dashboard-stats">
+                <article class="stat-box">
+                    <h3>Total records</h3>
+                    <p>—</p>
+                </article>
+                <article class="stat-box">
+                    <h3>Total spent</h3>
+                    <p>—</p>
+                </article>
+                <article class="stat-box">
+                    <h3>Top category</h3>
+                    <p>—</p>
+                </article>
+                <article class="stat-box">
+                    <h3>Cap</h3>
+                    <p>—</p>
+                </article>
+            </div>
+            <div class="chart-box" aria-label="Spending chart" role="img"></div>
+            <div class="cap-message" role="status" aria-live="polite"></div>
         </section>
         <section id="records" aria-labelledby="records-heading">
             <h2 id="records-heading">Records</h2>
-            <p>View and manage your financial records here.</p>
+            <form role="search" aria-label="Search records">
+                <label for="records-search">Search records</label>
+                <input type="search" id="records-search" name="search">
+                <label for="case-insensitive">Case-insensitive</label>
+                <input type="checkbox" id="case-insensitive" name="case-insensitive">
+            </form>
+            <table>
+                <caption>Expense records</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </section>
         <section id="add" aria-labelledby="add-heading">
             <h2 id="add-heading">Add Expense</h2>
-            <p>Record a new expense here.</p>
+            <form id="expense-form" novalidate>
+                <div class="form-field">
+                    <label for="expense-date">Date</label>
+                    <input type="date" id="expense-date" name="date" aria-describedby="expense-date-error" required>
+                    <p id="expense-date-error" class="error" aria-live="polite"></p>
+                </div>
+                <div class="form-field">
+                    <label for="expense-description">Description</label>
+                    <input type="text" id="expense-description" name="description"
+                        aria-describedby="expense-description-error" required>
+                    <p id="expense-description-error" class="error" aria-live="polite"></p>
+                </div>
+                <div class="form-field">
+                    <label for="expense-category">Category</label>
+                    <input type="text" id="expense-category" name="category" list="expense-category-options"
+                        aria-describedby="expense-category-error" required>
+                    <datalist id="expense-category-options">
+                        <option value="Food">
+                        <option value="Books">
+                        <option value="Transport">
+                        <option value="Entertainment">
+                        <option value="Fees">
+                        <option value="Other">
+                    </datalist>
+                    <p id="expense-category-error" class="error" aria-live="polite"></p>
+                </div>
+                <div class="form-field">
+                    <label for="expense-amount">Amount</label>
+                    <input type="text" id="expense-amount" name="amount" inputmode="decimal"
+                        aria-describedby="expense-amount-error" required>
+                    <p id="expense-amount-error" class="error" aria-live="polite"></p>
+                </div>
+                <button type="submit">Save</button>
+            </form>
         </section>
         <section id="settings" aria-labelledby="settings-heading">
             <h2 id="settings-heading">Settings</h2>
-            <p>Manage your account settings here.</p>
+            <fieldset>
+                <legend>Currency and rates</legend>
+                <div class="form-field">
+                    <p><strong>Base currency:</strong> USD</p>
+                </div>
+                <div class="form-field">
+                    <label for="exchange-rate-rwf">1 USD = <input type="number" id="exchange-rate-rwf"
+                            name="exchange-rate-rwf" min="0.000001" step="any"> RWF</label>
+                </div>
+                <div class="form-field">
+                    <label for="exchange-rate-eur">1 USD = <input type="number" id="exchange-rate-eur"
+                            name="exchange-rate-eur" min="0.000001" step="any"> EUR</label>
+                </div>
+                <div class="form-field">
+                    <label for="currency">Show amounts in</label>
+                    <select id="currency" name="currency">
+                        <option value="USD">USD</option>
+                        <option value="RWF">RWF</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Spending cap</legend>
+                <div class="form-field">
+                    <label for="spending-cap">Cap amount</label>
+                    <input type="number" id="spending-cap" name="spending-cap" min="0" step="0.01">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Categories</legend>
+                <div class="form-field">
+                    <label for="categories">Expense categories</label>
+                    <textarea id="categories" name="categories" rows="5" aria-describedby="categories-help"></textarea>
+                    <p id="categories-help">Enter one category per line. You can edit this list at any time.</p>
+                </div>
+            </fieldset>
+            <div class="settings-actions">
+                <label for="import-file">Import JSON file</label>
+                <input type="file" id="import-file" name="import-file" accept=".json">
+                <button type="button" id="import-button">Import</button>
+                <button type="button" id="export-button">Export</button>
+            </div>
         </section>
         <section id="about" aria-labelledby="about-heading">
             <h2 id="about-heading">About</h2>
-            <p>StuFina! Tracker is a simple tool to help you record and manage your financial transactions. It works on
-                any device and is easy to use. Created by <a href="https://github.com/RyanGakire" target="_blank"
-                    rel="noopener noreferrer">Ryan Gakire</a>.</p>
+            <p>StuFina Tracker is a simple tool to help you record and manage your financial transactions. It works on
+                any device and is easy to use. Built by Ryan Prince Gakire.</p>
+            <ul>
+                <li>
+                    <p>Github (opens in new tab): <a href="https://github.com/RyanGakire" target="_blank"
+                            rel="noopener noreferrer">RyanGakire</a></p>
+                </li>
+                <li>
+                    <p>Email: <a href="mailto:r.gakire@alustudent.com">r.gakire@alustudent.com</a></p>
+                </li>
+            </ul>
         </section>
     </main>
+    <footer>
+        <p>Ryan Prince Gakire 2026, Email: <a href="mailto:r.gakire@alustudent.com">r.gakire@alustudent.com</a></p>
+    </footer>
 </body>
-<footer>
-    <p>Ryan Prince Gakire 2026, Email: <a href="mailto:r.gakire@alustudent.com">r.gakire@alustudent.com</a></p>
-</footer>
 
 </html>

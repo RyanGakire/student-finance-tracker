@@ -6,7 +6,7 @@
 
 :root {
 	--text: #1f2937;
-	--bg: #ffda1f;
+	--bg: #e6fad0;
 	--accent: #2563eb;
 }
 
@@ -55,6 +55,7 @@ main {
 @media (min-width: 768px) {
 	main {
 		padding-inline: 2rem;
+		display: flex;
 	}
 }
 
@@ -75,4 +76,9 @@ main {
 		gap: 2rem;
 		align-items: start;
 	}
+}
+
+ul,
+ol {
+	list-style: none;
 }
