@@ -1,0 +1,128 @@
+[
+  {
+    "id": "txn_0001",
+    "description": "Lunch at cafeteria",
+    "amount": 12.50,
+    "category": "Food",
+    "date": "2026-10-12",
+    "createdAt": "2026-10-12T12:15:00.000Z",
+    "updatedAt": "2026-10-12T12:15:00.000Z"
+  },
+  {
+    "id": "txn_0002",
+    "description": "Coffee with friends",
+    "amount": 8.75,
+    "category": "Entertainment",
+    "date": "2026-10-11",
+    "createdAt": "2026-10-11T16:40:00.000Z",
+    "updatedAt": "2026-10-11T16:40:00.000Z"
+  },
+  {
+    "id": "txn_0003",
+    "description": "Bus pass for the the month",
+    "amount": 45,
+    "category": "Transport",
+    "date": "2026-10-10",
+    "createdAt": "2026-10-10T07:05:00.000Z",
+    "updatedAt": "2026-10-10T07:05:00.000Z"
+  },
+  {
+    "id": "txn_0004",
+    "description": "Tuition fee installment",
+    "amount": 9999.99,
+    "category": "Fees",
+    "date": "2026-10-08",
+    "createdAt": "2026-10-08T09:00:00.000Z",
+    "updatedAt": "2026-10-09T10:30:00.000Z"
+  },
+  {
+    "id": "txn_0005",
+    "description": "Free campus tea",
+    "amount": 0,
+    "category": "Food",
+    "date": "2026-10-07",
+    "createdAt": "2026-10-07T10:20:00.000Z",
+    "updatedAt": "2026-10-07T10:20:00.000Z"
+  },
+  {
+    "id": "txn_0006",
+    "description": "Pens & notebooks <A4 size>",
+    "amount": 6.4,
+    "category": "Books",
+    "date": "2026-10-06",
+    "createdAt": "2026-10-06T14:00:00.000Z",
+    "updatedAt": "2026-10-06T14:00:00.000Z"
+  },
+  {
+    "id": "txn_0007",
+    "description": "Econometrics textbook (2nd edition)",
+    "amount": 89.99,
+    "category": "Books",
+    "date": "2026-09-23",
+    "createdAt": "2026-09-23T11:45:00.000Z",
+    "updatedAt": "2026-09-23T11:45:00.000Z"
+  },
+  {
+    "id": "txn_0008",
+    "description": "Café latte and croissant",
+    "amount": 0.5,
+    "category": "Food",
+    "date": "2026-09-30",
+    "createdAt": "2026-09-30T08:10:00.000Z",
+    "updatedAt": "2026-09-30T08:10:00.000Z"
+  },
+  {
+    "id": "txn_0009",
+    "description": "Movie night - \"Late Show\" tickets",
+    "amount": 15,
+    "category": "Entertainment",
+    "date": "2026-01-01",
+    "createdAt": "2026-01-01T21:00:00.000Z",
+    "updatedAt": "2026-01-01T21:00:00.000Z"
+  },
+  {
+    "id": "txn_0010",
+    "description": "Year-end taxi home",
+    "amount": 23.05,
+    "category": "Transport",
+    "date": "2025-12-31",
+    "createdAt": "2025-12-31T23:30:00.000Z",
+    "updatedAt": "2025-12-31T23:30:00.000Z"
+  },
+  {
+    "id": "txn_0011",
+    "description": "Leap day library fine",
+    "amount": 2,
+    "category": "Fees",
+    "date": "2024-02-29",
+    "createdAt": "2024-02-29T13:00:00.000Z",
+    "updatedAt": "2024-02-29T13:00:00.000Z"
+  },
+  {
+    "id": "txn_0012",
+    "description": "Laptop repair",
+    "amount": 1250,
+    "category": "Other",
+    "date": "2026-10-09",
+    "createdAt": "2026-10-09T15:25:00.000Z",
+    "updatedAt": "2026-10-09T15:25:00.000Z"
+  },
+  {
+    "id": "txn_0013",
+    "description": "Student's union membership fee for the full academic year including welcome pack",
+    "amount": 30,
+    "category": "Fees",
+    "date": "2026-09-01",
+    "createdAt": "2026-09-01T09:00:00.000Z",
+    "updatedAt": "2026-09-01T09:00:00.000Z"
+  },
+  {
+    "id": "txn_0014",
+    "description": "Tea and tea bags restock",
+    "amount": 4.99,
+    "category": "Food",
+    "date": "2026-10-11",
+    "createdAt": "2026-10-11T18:00:00.000Z",
+    "updatedAt": "2026-10-11T18:00:00.000Z"
+  }
+]
