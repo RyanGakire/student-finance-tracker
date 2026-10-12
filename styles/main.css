@@ -8,20 +8,25 @@
 	--text: #1f2937;
 	--bg: #e6fad0;
 	--accent: #2563eb;
-}
-
-html {
-	font-size: 16px;
+	--accent-hover: #1d4ed8;
+	--border: #d1d5db;
+	--error: #991b1b;
 }
 
 body {
 	margin: 0;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-	font-size: 1rem;
 	line-height: 1.6;
 	color: var(--text);
 	background-color: var(--bg);
-	transition: background-color 0.2s;
+}
+
+header,
+main,
+footer {
+	max-width: 70rem;
+	margin-inline: auto;
+	padding-inline: 1rem;
 }
 
 a {
@@ -42,43 +47,135 @@ a {
 	transform: translateY(0);
 }
 
-:is(a, button, input):focus-visible {
+:is(a, button, input, select, textarea):focus-visible {
 	outline: 3px solid var(--accent);
 	outline-offset: 3px;
 }
 
-main {
-	max-width: 70rem;
-	margin-inline: auto;
+section {
+	margin-block: 2rem;
+}
+
+.dashboard-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.stat-box {
+	flex: 1 1 100%;
+	padding: 1rem;
+	background-color: #fff;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+}
+
+.form-field {
+	margin-bottom: 1rem;
+}
+
+.form-field label {
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+input:not([type="checkbox"]),
+select,
+textarea {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid var(--border);
+	border-radius: 0.25rem;
+	font: inherit;
+}
+
+fieldset {
+	margin-block: 1rem;
+	padding: 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+}
+
+.error {
+	margin-block: 0.25rem;
+	color: var(--error);
+	font-size: 0.875rem;
+}
+
+button {
+	padding: 0.5rem 1rem;
+	color: #fff;
+	background-color: var(--accent);
+	border: 0;
+	border-radius: 0.25rem;
+	font: inherit;
+	cursor: pointer;
+}
+
+.table-scroll {
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	min-width: 36rem;
+	border-collapse: collapse;
+}
+
+th,
+td {
+	padding: 0.5rem;
+	border: 1px solid var(--border);
+	text-align: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+	a,
+	button {
+		transition: background-color 0.2s, color 0.2s;
+	}
+}
+
+a:hover,
+a:focus-visible {
+	color: var(--accent-hover);
+	background-color: #dbeafe;
+}
+
+button:hover,
+button:focus-visible {
+	background-color: var(--accent-hover);
+}
+
+@media (min-width: 360px) {
+
+	header,
+	main,
+	footer {
+		padding-inline: 1.25rem;
+	}
+}
+
+nav ul {
+	padding: 0;
+	list-style: none;
 }
 
 @media (min-width: 768px) {
-	main {
-		padding-inline: 2rem;
+	nav ul {
 		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.stat-box {
+		flex-basis: calc(50% - 0.5rem);
 	}
 }
 
 @media (min-width: 1024px) {
-	main {
-		padding-inline: 4rem;
+	.stat-box {
+		flex-basis: calc(25% - 0.75rem);
 	}
-
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: 1rem;
-	}
-
-	.chart-form-layout {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 2rem;
-		align-items: start;
-	}
-}
-
-ul,
-ol {
-	list-style: none;
 }
