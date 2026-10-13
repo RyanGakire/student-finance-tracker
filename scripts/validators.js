@@ -13,7 +13,7 @@ export function validateDescription(value) {
         return "Description is required.";
     }
 
-    return DESCRIPTION_REGEX.match(value)
+    return DESCRIPTION_REGEX.test(value)
         ? ""
         : "Remove the space at the start or end.";
 }
@@ -23,7 +23,7 @@ export function validateAmount(value) {
         return "Amount is required.";
     }
 
-    return AMOUNT_REGEX.match(value)
+    return AMOUNT_REGEX.test(value)
         ? ""
         : "Remove the space at the start or end and enter a non-negative number with up to two decimal places.";
 }
@@ -33,7 +33,7 @@ export function validateDate(value) {
         return "Date is required.";
     }
 
-    return DATE_REGEX.match(value)
+    return DATE_REGEX.test(value)
         ? ""
         : "Remove the space at the start or end and enter a date in YYYY-MM-DD format.";
 }
@@ -43,7 +43,7 @@ export function validateCategory(value) {
         return "Category is required.";
     }
 
-    return CATEGORY_REGEX.match(value)
+    return CATEGORY_REGEX.test(value)
         ? ""
         : "Remove the space at the start or end and use letters, single spaces, or hyphens in the category.";
 }
