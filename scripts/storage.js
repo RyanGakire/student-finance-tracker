@@ -4,7 +4,7 @@ const KEY = 'stufina:records';
 export function load() {
     try {
         const storedData = localStorage.getItem(KEY);
-        const data = storedData ? JSON.parse(storedData) : {};
+        const data = storedData ? JSON.parse(storedData) : [];
         return data || [];
     } catch (e) {
         console.warn('Error loading data from localStorage', e);
