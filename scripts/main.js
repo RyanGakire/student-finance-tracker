@@ -12,7 +12,15 @@ descriptionInput?.addEventListener("input", () => {
 
 descriptionInput?.addEventListener("blur", () => {
 	descriptionInput.value = normalizeDescription(descriptionInput.value);
+	const message = validateDescription(descriptionInput.value);
+
 	if (descriptionError) {
-		descriptionError.textContent = validateDescription(descriptionInput.value);
+		descriptionError.textContent = message;
+	}
+
+	if (message) {
+		descriptionInput.setAttribute("aria-invalid", "true");
+	} else {
+		descriptionInput.removeAttribute("aria-invalid");
 	}
 });

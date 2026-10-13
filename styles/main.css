@@ -89,6 +89,11 @@ textarea {
 	font: inherit;
 }
 
+[aria-invalid="true"] {
+	border-color: var(--error);
+	border-width: 2px;
+}
+
 fieldset {
 	margin-block: 1rem;
 	padding: 1rem;
