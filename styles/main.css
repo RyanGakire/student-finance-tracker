@@ -102,6 +102,12 @@ fieldset {
 	font-size: 0.875rem;
 }
 
+.warning {
+	margin-block: 0.25rem;
+	color: #854d0e;
+	font-size: 0.875rem;
+}
+
 button {
 	padding: 0.5rem 1rem;
 	color: #fff;
