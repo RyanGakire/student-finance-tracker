@@ -14,6 +14,10 @@ import {
 	deleteRecord
 } from "./state.js";
 
+import {
+	renderTable
+} from "./ui.js";
+
 const descriptionInput = document.querySelector("#expense-description");
 const descriptionWarning = document.querySelector("#expense-description-warning");
 const descriptionError = document.querySelector("#expense-description-error");
@@ -104,6 +108,7 @@ form?.addEventListener("submit", (event) => {
 	};
 
 	addRecord(record);
+	renderTable(getRecords());
 
 	if (statusMessage) {
 		statusMessage.textContent = "Expense saved";
@@ -114,3 +119,4 @@ form?.addEventListener("submit", (event) => {
 		descriptionWarning.textContent = "";
 	}
 });
+renderTable(getRecords());
