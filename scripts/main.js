@@ -8,6 +8,12 @@ import {
 	validateDescription
 } from "./validators.js";
 
+import {
+	getRecords,
+	addRecord,
+	deleteRecord
+} from "./state.js";
+
 const descriptionInput = document.querySelector("#expense-description");
 const descriptionWarning = document.querySelector("#expense-description-warning");
 const descriptionError = document.querySelector("#expense-description-error");
@@ -86,6 +92,18 @@ form?.addEventListener("submit", (event) => {
 		statusMessage.textContent = "Please correct the errors above.";
 		return;
 	}
+
+	const record = {
+		id: "txn_" + Date.now(),
+		description: descriptionInput.value,
+		category: categoryInput.value,
+		amount: parseFloat(amountInput.value),
+		date: dateInput.value,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString()
+	};
+
+	addRecord(record);
 
 	if (statusMessage) {
 		statusMessage.textContent = "Expense saved";
