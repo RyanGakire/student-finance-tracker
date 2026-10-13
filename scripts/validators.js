@@ -25,7 +25,7 @@ export function validateAmount(value) {
 
     return AMOUNT_REGEX.test(value)
         ? ""
-        : "Remove the space at the start or end and enter a non-negative number with up to two decimal places.";
+        : "Enter a non-negative number with up to two decimal places.";
 }
 
 export function validateDate(value) {
@@ -35,7 +35,7 @@ export function validateDate(value) {
 
     return DATE_REGEX.test(value)
         ? ""
-        : "Remove the space at the start or end and enter a date in YYYY-MM-DD format.";
+        : "Enter a date in YYYY-MM-DD format.";
 }
 
 export function validateCategory(value) {
@@ -45,7 +45,32 @@ export function validateCategory(value) {
 
     return CATEGORY_REGEX.test(value)
         ? ""
-        : "Remove the space at the start or end and use letters, single spaces, or hyphens in the category.";
+        : "Only use letters, single spaces, or hyphens in the category.";
+}
+
+export function validateCategoryList(text) {
+    const lines = text.split("\n");
+    const errors = [];
+    let hasCategory = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) {
+            continue;
+        }
+        hasCategory = true;
+
+        const message = validateCategory(line);
+        if (message) {
+            errors.push(`Line ${i + 1}: ${message}`);
+        }
+    }
+
+    if (!hasCategory) {
+        return "Add at least one category.";
+    }
+
+    return errors.join("\n");
 }
 
 export function getDuplicateWordWarning(value) {

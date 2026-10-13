@@ -3,6 +3,7 @@ import {
 	normalizeDescription,
 	validateAmount,
 	validateCategory,
+	validateCategoryList,
 	validateDate,
 	validateDescription
 } from "./validators.js";
@@ -16,6 +17,8 @@ const amountInput = document.querySelector("#expense-amount");
 const amountError = document.querySelector("#expense-amount-error");
 const dateInput = document.querySelector("#expense-date");
 const dateError = document.querySelector("#expense-date-error");
+const categoriesInput = document.querySelector("#categories");
+const categoriesError = document.querySelector("#categories-error");
 const form = document.querySelector("#expense-form");
 const statusMessage = document.querySelector("#status-message");
 
@@ -55,6 +58,10 @@ amountInput?.addEventListener("blur", () => {
 
 dateInput?.addEventListener("blur", () => {
 	showValidationResult(dateInput, dateError, validateDate);
+});
+
+categoriesInput?.addEventListener("blur", () => {
+	showValidationResult(categoriesInput, categoriesError, validateCategoryList);
 });
 
 form?.addEventListener("submit", (event) => {

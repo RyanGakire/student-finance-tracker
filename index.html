@@ -146,8 +146,15 @@
                 <legend>Categories</legend>
                 <div class="form-field">
                     <label for="categories">Expense categories</label>
-                    <textarea id="categories" name="categories" rows="5" aria-describedby="categories-help"></textarea>
+                    <textarea id="categories" name="categories" rows="5"
+                        aria-describedby="categories-help categories-error">Food
+Books
+Transport
+Entertainment
+Fees
+Other</textarea>
                     <p id="categories-help">Enter one category per line. You can edit this list at any time.</p>
+                    <p id="categories-error" class="error" aria-live="polite"></p>
                 </div>
             </fieldset>
             <div class="settings-actions">
