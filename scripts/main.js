@@ -16,13 +16,22 @@ import {
 } from "./state.js";
 
 import {
-	renderTable
+	renderTable,
+	renderStats,
+	renderChart,
+	renderCapMessage
 } from "./ui.js";
 
 import {
 	compileRegex,
 	filterRecords
 } from "./search.js";
+
+import { getLast7Days, getTotal } from "./stats.js";
+
+import { loadSettings, saveSettings, getCap } from "./storage.js";
+
+let settings = loadSettings();
 
 const descriptionInput = document.querySelector("#expense-description");
 const descriptionWarning = document.querySelector("#expense-description-warning");
@@ -35,6 +44,8 @@ const dateInput = document.querySelector("#expense-date");
 const dateError = document.querySelector("#expense-date-error");
 const categoriesInput = document.querySelector("#categories");
 const categoriesError = document.querySelector("#categories-error");
+const capInput = document.querySelector("#spending-cap");
+const capError = document.querySelector("#spending-cap-error");
 const form = document.querySelector("#expense-form");
 const statusMessage = document.querySelector("#status-message");
 const recordsBody = document.querySelector("#records tbody");
@@ -43,6 +54,10 @@ const sortButtons = document.querySelectorAll(".sort-button");
 const searchInput = document.querySelector("#records-search");
 const caseInsensitiveCheckbox = document.querySelector("#case-insensitive");
 const searchForm = document.querySelector("#records form[role='search']");
+
+if (capInput) {
+	capInput.value = settings.cap ?? "";
+}
 
 let sortKey = "date";
 let sortDirection = "desc";
@@ -82,9 +97,11 @@ function render() {
 			header?.removeAttribute("aria-sort");
 		}
 	});
-}
 
-render();
+	renderStats(getRecords(), getCap());
+	renderChart(getLast7Days(getRecords()), getCap());
+	renderCapMessage(getTotal(getRecords()), getCap());
+}
 
 sortButtons.forEach(button => {
 	button.addEventListener("click", () => {
@@ -143,6 +160,14 @@ categoriesInput?.addEventListener("blur", () => {
 	showValidationResult(categoriesInput, categoriesError, validateCategoryList);
 });
 
+capInput?.addEventListener("change", () => {
+	if (!showValidationResult(capInput, capError, validateAmount)) {
+		settings.cap = parseFloat(capInput.value);
+		saveSettings(settings);
+		render();
+	}
+});
+
 form?.addEventListener("submit", (event) => {
 	event.preventDefault();
 
@@ -177,7 +202,7 @@ form?.addEventListener("submit", (event) => {
 	};
 
 	addRecord(record);
-	renderTable(getRecords());
+	render();
 
 	if (statusMessage) {
 		statusMessage.textContent = "Expense saved";
@@ -196,29 +221,14 @@ recordsBody?.addEventListener("click", (event) => {
 		}
 		const id = event.target.dataset.id;
 		deleteRecord(id);
-		renderTable(getRecords());
+		render();
 		if (recordsStatus) {
 			recordsStatus.textContent = "Expense deleted";
 		}
 	}
 });
 
-recordsBody?.addEventListener("click", (event) => {
-	const button = event.target.closest(".sort-button");
-	if (!button) {
-		return;
-	}
 
-	const key = button.dataset.key;
-	if (sortKey === key) {
-		sortDirection = sortDirection === "asc" ? "desc" : "asc";
-	} else {
-		sortKey = key;
-		sortDirection = "asc";
-	}
-
-	render();
-});
 
 searchInput?.addEventListener("input", () => {
 	render();
@@ -232,3 +242,5 @@ searchForm?.addEventListener("submit", (event) => {
 	event.preventDefault();
 	render();
 });
+
+render();
