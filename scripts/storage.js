@@ -13,3 +13,29 @@ export function load() {
 }
 
 export const save = data => localStorage.setItem(KEY, JSON.stringify(data));
+
+const CAP_KEY = 'stufina:settings';
+
+export function saveSettings(newSettings) {
+    settings = { ...settings, ...newSettings };
+    try {
+        localStorage.setItem(CAP_KEY, JSON.stringify(settings));
+    } catch (e) {
+        console.warn('Error saving settings to localStorage', e);
+    }
+}
+
+export function getCap() {
+    return settings.cap || null;
+}
+
+export function loadSettings() {
+    try {
+        const storedData = localStorage.getItem(CAP_KEY);
+        const data = storedData ? JSON.parse(storedData) : {};
+        return data || {};
+    } catch (e) {
+        console.warn('Error loading settings from localStorage', e);
+        return {};
+    }
+}
