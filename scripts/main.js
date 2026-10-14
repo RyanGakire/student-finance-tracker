@@ -19,6 +19,11 @@ import {
 	renderTable
 } from "./ui.js";
 
+import {
+	compileRegex,
+	filterRecords
+} from "./search.js";
+
 const descriptionInput = document.querySelector("#expense-description");
 const descriptionWarning = document.querySelector("#expense-description-warning");
 const descriptionError = document.querySelector("#expense-description-error");
@@ -35,12 +40,38 @@ const statusMessage = document.querySelector("#status-message");
 const recordsBody = document.querySelector("#records tbody");
 const recordsStatus = document.querySelector("#records-status");
 const sortButtons = document.querySelectorAll(".sort-button");
+const searchInput = document.querySelector("#records-search");
+const caseInsensitiveCheckbox = document.querySelector("#case-insensitive");
+const searchForm = document.querySelector("#records form[role='search']");
 
 let sortKey = "date";
 let sortDirection = "desc";
 
 function render() {
-	renderTable(sortRecords(getRecords(), sortKey, sortDirection));
+	const pattern = searchInput.value.trim();
+	const flags = caseInsensitiveCheckbox.checked ? "i" : "";
+
+	let records = getRecords();
+	let highlight = null;
+	let emptyMessage = "No expenses yet. Add one in the form below.";
+
+	if (pattern) {
+		const regex = compileRegex(pattern, flags);
+		if (regex) {
+			records = filterRecords(records, regex);
+			recordsStatus.textContent = `Found ${records.length} matching expense out of ${getRecords().length}.`;
+			highlight = compileRegex(pattern, flags + "g");
+			emptyMessage = "No matching expenses found.";
+		} else {
+			recordsStatus.textContent = "Invalid search pattern.";
+			emptyMessage = "Invalid search pattern.";
+		}
+	} else {
+		recordsStatus.textContent = "";
+	}
+
+	const sortedRecords = sortRecords(records, sortKey, sortDirection);
+	renderTable(sortedRecords, highlight, emptyMessage);
 
 	sortButtons.forEach(button => {
 		const header = button.closest("th");
@@ -186,5 +217,18 @@ recordsBody?.addEventListener("click", (event) => {
 		sortDirection = "asc";
 	}
 
+	render();
+});
+
+searchInput?.addEventListener("input", () => {
+	render();
+});
+
+caseInsensitiveCheckbox?.addEventListener("change", () => {
+	render();
+});
+
+searchForm?.addEventListener("submit", (event) => {
+	event.preventDefault();
 	render();
 });
