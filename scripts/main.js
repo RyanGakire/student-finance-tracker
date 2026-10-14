@@ -54,6 +54,8 @@ const sortButtons = document.querySelectorAll(".sort-button");
 const searchInput = document.querySelector("#records-search");
 const caseInsensitiveCheckbox = document.querySelector("#case-insensitive");
 const searchForm = document.querySelector("#records form[role='search']");
+const exportButton = document.querySelector("#export-button");
+const settingsStatusMessage = document.querySelector("#settings-status");
 
 if (capInput) {
 	capInput.value = settings.cap ?? "";
@@ -241,6 +243,23 @@ caseInsensitiveCheckbox?.addEventListener("change", () => {
 searchForm?.addEventListener("submit", (event) => {
 	event.preventDefault();
 	render();
+});
+
+exportButton?.addEventListener("click", () => {
+	const records = getRecords();
+	const text = JSON.stringify(records, null, 2);
+	const blob = new Blob([text], { type: "application/json" });
+	const url = URL.createObjectURL(blob);
+	const link = document.createElement("a");
+
+	link.href = url;
+	link.download = "stufina-expenses.json";
+	link.click();
+	URL.revokeObjectURL(url);
+
+	if (settingsStatusMessage) {
+		settingsStatusMessage.textContent = `Exported ${records.length} expenses.`;
+	}
 });
 
 render();
