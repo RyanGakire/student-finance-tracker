@@ -18,3 +18,16 @@ export function deleteRecord(id) {
     records = records.filter(record => record.id !== id);
     save(records);
 }
+
+export function sortRecords(records, key, direction) {
+    const sortedRecords = [...records];
+    sortedRecords.sort((a, b) => {
+        if (key === 'amount') {
+            return direction === 'asc' ? a.amount - b.amount : b.amount - a.amount;
+        } else {
+            return direction === 'asc' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
+        }
+    });
+
+    return sortedRecords;
+}

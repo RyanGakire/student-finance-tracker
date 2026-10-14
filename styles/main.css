@@ -141,6 +141,14 @@ td {
 	text-align: left;
 }
 
+th[aria-sort="ascending"] .sort-button::after {
+	content: " ▲";
+}
+
+th[aria-sort="descending"] .sort-button::after {
+	content: " ▼";
+}
+
 @media (prefers-reduced-motion: no-preference) {
 
 	a,
@@ -172,6 +180,15 @@ button:focus-visible {
 nav ul {
 	padding: 0;
 	list-style: none;
+}
+
+.sort-button {
+	background: none;
+	color: inherit;
+	font-weight: bold;
+	padding: 0;
+	width: 100%;
+	text-align: left;
 }
 
 @media (min-width: 768px) {

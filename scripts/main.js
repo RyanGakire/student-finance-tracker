@@ -11,7 +11,8 @@ import {
 import {
 	getRecords,
 	addRecord,
-	deleteRecord
+	deleteRecord,
+	sortRecords
 } from "./state.js";
 
 import {
@@ -33,6 +34,41 @@ const form = document.querySelector("#expense-form");
 const statusMessage = document.querySelector("#status-message");
 const recordsBody = document.querySelector("#records tbody");
 const recordsStatus = document.querySelector("#records-status");
+const sortButtons = document.querySelectorAll(".sort-button");
+
+let sortKey = "date";
+let sortDirection = "desc";
+
+function render() {
+	renderTable(sortRecords(getRecords(), sortKey, sortDirection));
+
+	sortButtons.forEach(button => {
+		const header = button.closest("th");
+
+		if (button.dataset.key === sortKey) {
+			header?.setAttribute("aria-sort", sortDirection === "asc" ? "ascending" : "descending");
+		} else {
+			header?.removeAttribute("aria-sort");
+		}
+	});
+}
+
+render();
+
+sortButtons.forEach(button => {
+	button.addEventListener("click", () => {
+		const key = button.dataset.key;
+
+		if (sortKey === key) {
+			sortDirection = sortDirection === "asc" ? "desc" : "asc";
+		} else {
+			sortKey = key;
+			sortDirection = "asc";
+		}
+
+		render();
+	});
+});
 
 function showValidationResult(input, error, validator) {
 	const message = validator(input.value);
@@ -136,4 +172,19 @@ recordsBody?.addEventListener("click", (event) => {
 	}
 });
 
-renderTable(getRecords());
+recordsBody?.addEventListener("click", (event) => {
+	const button = event.target.closest(".sort-button");
+	if (!button) {
+		return;
+	}
+
+	const key = button.dataset.key;
+	if (sortKey === key) {
+		sortDirection = sortDirection === "asc" ? "desc" : "asc";
+	} else {
+		sortKey = key;
+		sortDirection = "asc";
+	}
+
+	render();
+});
