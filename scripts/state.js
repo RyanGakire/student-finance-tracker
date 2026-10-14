@@ -31,3 +31,8 @@ export function sortRecords(records, key, direction) {
 
     return sortedRecords;
 }
+
+export function setRecords(newRecords) {
+    records = newRecords;
+    save(records);
+}

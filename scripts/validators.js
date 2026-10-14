@@ -78,3 +78,47 @@ export function getDuplicateWordWarning(value) {
         ? "This description contains a repeated word."
         : "";
 }
+
+export function validateImport(data) {
+    if (!Array.isArray(data)) {
+        return "Invalid data format: The file must contain a list of expenses.";
+    }
+
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        if (
+            item === null ||
+            typeof item !== "object" ||
+            typeof item.id !== "string" ||
+            !item.id
+        ) {
+            return `Item ${i + 1}: missing id.`;
+        }
+
+        const message =
+            validateDescription(typeof item.description === "string" ? item.description : "") ||
+            validateCategory(typeof item.category === "string" ? item.category : "") ||
+            validateDate(typeof item.date === "string" ? item.date : "");
+        if (message) {
+            return `Item ${i + 1}: ${message}`;
+        }
+
+        const amountMessage =
+            typeof item.amount === "number"
+                ? validateAmount(String(item.amount))
+                : "Enter a non-negative number with up to two decimal places.";
+        if (amountMessage) {
+            return `Item ${i + 1}: ${amountMessage}`;
+        }
+
+        if (typeof item.createdAt !== "string") {
+            return `Item ${i + 1}: createdAt must be a string.`;
+        }
+        if (typeof item.updatedAt !== "string") {
+            return `Item ${i + 1}: updatedAt must be a string.`;
+        }
+
+
+        return "";
+    }
+}

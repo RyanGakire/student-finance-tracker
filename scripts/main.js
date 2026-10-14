@@ -5,14 +5,16 @@ import {
 	validateCategory,
 	validateCategoryList,
 	validateDate,
-	validateDescription
+	validateDescription,
+	validateImport
 } from "./validators.js";
 
 import {
 	getRecords,
 	addRecord,
 	deleteRecord,
-	sortRecords
+	setRecords,
+	sortRecords,
 } from "./state.js";
 
 import {
@@ -56,6 +58,7 @@ const caseInsensitiveCheckbox = document.querySelector("#case-insensitive");
 const searchForm = document.querySelector("#records form[role='search']");
 const exportButton = document.querySelector("#export-button");
 const settingsStatusMessage = document.querySelector("#settings-status");
+const importButton = document.querySelector("#import-button");
 
 if (capInput) {
 	capInput.value = settings.cap ?? "";
@@ -259,6 +262,46 @@ exportButton?.addEventListener("click", () => {
 
 	if (settingsStatusMessage) {
 		settingsStatusMessage.textContent = `Exported ${records.length} expenses.`;
+	}
+});
+
+importButton?.addEventListener("click", async () => {
+	const importFile = document.querySelector("#import-file");
+	const file = importFile?.files?.[0];
+	if (!file) {
+		if (settingsStatusMessage) {
+			settingsStatusMessage.textContent = "Choose a JSON file first.";
+		}
+		return;
+	}
+
+	const text = await file.text();
+	let data;
+	try {
+		data = JSON.parse(text);
+	} catch {
+		if (settingsStatusMessage) {
+			settingsStatusMessage.textContent = "This file is not valid JSON.";
+		}
+		return;
+	}
+
+	const validationMessage = validateImport(data);
+	if (validationMessage) {
+		if (settingsStatusMessage) {
+			settingsStatusMessage.textContent = validationMessage;
+		}
+		return;
+	}
+
+	if (!confirm("Replace your current expenses with the imported ones?")) {
+		return;
+	}
+
+	setRecords(data);
+	render();
+	if (settingsStatusMessage) {
+		settingsStatusMessage.textContent = `Imported ${data.length} expenses.`;
 	}
 });
 

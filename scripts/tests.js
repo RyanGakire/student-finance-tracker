@@ -5,7 +5,8 @@ import {
     validateCategory,
     validateCategoryList,
     validateDate,
-    validateDescription
+    validateDescription,
+    validateImport
 } from "./validators.js";
 
 const results = document.querySelector("#results");
@@ -60,5 +61,12 @@ check("get duplicate word warning for 'Food Books' returns empty", getDuplicateW
 
 check("normalize description trims whitespace", normalizeDescription("  Lunch  ") === "Lunch", true);
 check("normalize description collapses spaces", normalizeDescription("Lunch   with   friends") === "Lunch with friends", true);
+
+check("validate import with valid data returns empty", validateImport([{ id: "1", description: "Lunch", category: "Food", date: "2026-01-01", amount: 12.50 }]) === "", true);
+check("validate import with missing id returns error", validateImport([{ description: "Lunch", category: "Food", date: "2026-01-01", amount: 12.50 }]) === "Item 1: missing id.", true);
+check("validate import with invalid description returns error", validateImport([{ id: "1", description: "", category: "Food", date: "2026-01-01", amount: 12.50 }]) === "Item 1: Description cannot be empty.", true);
+check("validate import with invalid category returns error", validateImport([{ id: "1", description: "Lunch", category: "", date: "2026-01-01", amount: 12.50 }]) === "Item 1: Category cannot be empty.", true);
+check("validate import with invalid date returns error", validateImport([{ id: "1", description: "Lunch", category: "Food", date: "2026-13-01", amount: 12.50 }]) === "Item 1: Invalid date format. Use YYYY-MM-DD.", true);
+check("validate import with invalid amount returns error", validateImport([{ id: "1", description: "Lunch", category: "Food", date: "2026-01-01", amount: -5 }]) === "Item 1: Amount must be a non-negative number with up to two decimal places.", true);
 
 summary.textContent = `Passed ${passed} out of ${total} tests.`;
