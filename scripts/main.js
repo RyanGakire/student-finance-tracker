@@ -31,6 +31,8 @@ const categoriesInput = document.querySelector("#categories");
 const categoriesError = document.querySelector("#categories-error");
 const form = document.querySelector("#expense-form");
 const statusMessage = document.querySelector("#status-message");
+const recordsBody = document.querySelector("#records tbody");
+const recordsStatus = document.querySelector("#records-status");
 
 function showValidationResult(input, error, validator) {
 	const message = validator(input.value);
@@ -119,4 +121,19 @@ form?.addEventListener("submit", (event) => {
 		descriptionWarning.textContent = "";
 	}
 });
+
+recordsBody?.addEventListener("click", (event) => {
+	if (event.target.classList.contains("delete-button")) {
+		if (!confirm("Are you sure you want to delete this expense?")) {
+			return;
+		}
+		const id = event.target.dataset.id;
+		deleteRecord(id);
+		renderTable(getRecords());
+		if (recordsStatus) {
+			recordsStatus.textContent = "Expense deleted";
+		}
+	}
+});
+
 renderTable(getRecords());
