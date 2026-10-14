@@ -149,11 +149,34 @@ th[aria-sort="descending"] .sort-button::after {
 	content: " ▼";
 }
 
+.chart-box {
+	display: flex;
+	align-items: flex-end;
+	height: 10rem;
+	gap: 0.5rem;
+}
+
+.chart-col {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	height: 100%;
+}
+
+.chart-bar {
+	background-color: var(--accent);
+}
+
 @media (prefers-reduced-motion: no-preference) {
 
 	a,
 	button {
 		transition: background-color 0.2s, color 0.2s;
+	}
+
+	.chart-bar {
+		transition: height 0.3s;
 	}
 }
 

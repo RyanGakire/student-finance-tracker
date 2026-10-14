@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Finance Tracker</title>
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="icon" href="assets/wireframes/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <script src="scripts/main.js" type="module"></script>
 </head>
 
@@ -30,19 +30,19 @@
             <div class="dashboard-stats">
                 <article class="stat-box">
                     <h3>Total records</h3>
-                    <p>—</p>
+                    <p id="stat-count">—</p>
                 </article>
                 <article class="stat-box">
                     <h3>Total spent</h3>
-                    <p>—</p>
+                    <p id="stat-total">—</p>
                 </article>
                 <article class="stat-box">
                     <h3>Top category</h3>
-                    <p>—</p>
+                    <p id="stat-top-category">—</p>
                 </article>
                 <article class="stat-box">
                     <h3>Cap</h3>
-                    <p>—</p>
+                    <p id="stat-cap">—</p>
                 </article>
             </div>
             <div class="chart-box" aria-label="Spending chart" role="img"></div>
@@ -86,7 +86,7 @@
                 <div class="form-field">
                     <label for="expense-description">Description</label>
                     <input type="text" id="expense-description" name="description"
-                        aria-describedby="expense-description-error" required>
+                        aria-describedby="expense-description-error expense-description-warning" required>
                     <p id="expense-description-error" class="error" aria-live="polite"></p>
                     <p id="expense-description-warning" class="warning" aria-live="polite"></p>
                 </div>
@@ -142,7 +142,9 @@
                 <legend>Spending cap</legend>
                 <div class="form-field">
                     <label for="spending-cap">Cap amount</label>
-                    <input type="number" id="spending-cap" name="spending-cap" min="0" step="0.01">
+                    <input type="text" inputmode="decimal" id="spending-cap" name="spending-cap">
+                    <p id="spending-cap-error" class="error" aria-live="polite" aria-describedby="spending-cap-error">
+                    </p>
                 </div>
             </fieldset>
             <fieldset>
@@ -173,8 +175,8 @@ Other</textarea>
                 any device and is easy to use. Built by Ryan Prince Gakire.</p>
             <ul>
                 <li>
-                    <p>Github (opens in new tab): <a href="https://github.com/RyanGakire" target="_blank"
-                            rel="noopener noreferrer">RyanGakire</a></p>
+                    <p>Github: <a href="https://github.com/RyanGakire" target="_blank"
+                            rel="noopener noreferrer">RyanGakire (opens in new tab).</a></p>
                 </li>
                 <li>
                     <p>Email: <a href="mailto:r.gakire@alustudent.com">r.gakire@alustudent.com</a></p>
