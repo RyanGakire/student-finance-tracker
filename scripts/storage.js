@@ -5,7 +5,7 @@ export function load() {
     try {
         const storedData = localStorage.getItem(KEY);
         const data = storedData ? JSON.parse(storedData) : [];
-        return data || [];
+        return Array.isArray(data) ? data : [];
     } catch (e) {
         console.warn('Error loading data from localStorage', e);
         return [];
@@ -17,17 +17,13 @@ export const save = data => localStorage.setItem(KEY, JSON.stringify(data));
 const CAP_KEY = 'stufina:settings';
 
 export function saveSettings(newSettings) {
-    settings = { ...settings, ...newSettings };
     try {
-        localStorage.setItem(CAP_KEY, JSON.stringify(settings));
+        localStorage.setItem(CAP_KEY, JSON.stringify(newSettings));
     } catch (e) {
         console.warn('Error saving settings to localStorage', e);
     }
 }
 
-export function getCap() {
-    return settings.cap || null;
-}
 
 export function loadSettings() {
     try {

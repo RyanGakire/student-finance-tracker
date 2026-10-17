@@ -6,7 +6,8 @@ import {
 	validateCategoryList,
 	validateDate,
 	validateDescription,
-	validateImport
+	validateImport,
+	validateExchangeRate
 } from "./validators.js";
 
 import {
@@ -31,7 +32,7 @@ import {
 
 import { getLast7Days, getTotal } from "./stats.js";
 
-import { loadSettings, saveSettings, getCap } from "./storage.js";
+import { loadSettings, saveSettings } from "./storage.js";
 
 let settings = loadSettings();
 
@@ -59,9 +60,25 @@ const searchForm = document.querySelector("#records form[role='search']");
 const exportButton = document.querySelector("#export-button");
 const settingsStatusMessage = document.querySelector("#settings-status");
 const importButton = document.querySelector("#import-button");
+const exchangeRateRwfInput = document.querySelector("#exchange-rate-rwf");
+const exchangeRateEurInput = document.querySelector("#exchange-rate-eur");
+const exchangeRateRwfError = document.querySelector("#exchange-rate-rwf-error");
+const exchangeRateEurError = document.querySelector("#exchange-rate-eur-error");
+const currencySelect = document.querySelector("#currency");
 
 if (capInput) {
 	capInput.value = settings.cap ?? "";
+}
+settings.exchangeRateRwf = settings.exchangeRateRwf ?? { RWF: 1, EUR: 1 };
+settings.currency = settings.currency ?? "USD";
+if (exchangeRateRwfInput) {
+	exchangeRateRwfInput.value = settings.exchangeRateRwf.RWF ?? "";
+}
+if (exchangeRateEurInput) {
+	exchangeRateEurInput.value = settings.exchangeRateRwf.EUR ?? "";
+}
+if (currencySelect) {
+	currencySelect.value = settings.currency;
 }
 
 let sortKey = "date";
@@ -103,9 +120,9 @@ function render() {
 		}
 	});
 
-	renderStats(getRecords(), getCap());
-	renderChart(getLast7Days(getRecords()), getCap());
-	renderCapMessage(getTotal(getRecords()), getCap());
+	renderStats(getRecords(), settings);
+	renderChart(getLast7Days(getRecords()), settings);
+	renderCapMessage(getTotal(getRecords()), settings);
 }
 
 sortButtons.forEach(button => {
@@ -171,6 +188,28 @@ capInput?.addEventListener("change", () => {
 		saveSettings(settings);
 		render();
 	}
+});
+
+exchangeRateRwfInput?.addEventListener("change", () => {
+	if (!showValidationResult(exchangeRateRwfInput, exchangeRateRwfError, validateExchangeRate)) {
+		settings.exchangeRateRwf.RWF = parseFloat(exchangeRateRwfInput.value);
+		saveSettings(settings);
+		render();
+	}
+});
+
+exchangeRateEurInput?.addEventListener("change", () => {
+	if (!showValidationResult(exchangeRateEurInput, exchangeRateEurError, validateExchangeRate)) {
+		settings.exchangeRateRwf.EUR = parseFloat(exchangeRateEurInput.value);
+		saveSettings(settings);
+		render();
+	}
+});
+
+currencySelect?.addEventListener("change", () => {
+	settings.currency = currencySelect.value;
+	saveSettings(settings);
+	render();
 });
 
 form?.addEventListener("submit", (event) => {

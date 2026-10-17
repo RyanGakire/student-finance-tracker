@@ -1,5 +1,22 @@
 import { getTotal, getTopCategory } from "./stats.js";
 
+function formatMoney(amountUSD, settings) {
+    const currency = settings.currency ?? "USD";
+    const exchangeRate = settings.exchangeRateRwf ?? { RWF: 1, EUR: 1 };
+    let amount = amountUSD;
+
+    if (currency === "RWF") {
+        amount *= exchangeRate.RWF;
+    } else if (currency === "EUR") {
+        amount *= exchangeRate.EUR;
+    }
+
+    return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: currency,
+    }).format(amount);
+}
+
 export function renderTable(records, highlightRegex, emptyMessage) {
     const tBody = document.querySelector("#records tbody");
     tBody.textContent = "";
@@ -16,7 +33,7 @@ export function renderTable(records, highlightRegex, emptyMessage) {
     for (const record of records) {
         const tr = document.createElement("tr");
 
-        for (const value of [record.date, record.description, record.category, record.amount.toFixed(2)]) {
+        for (const value of [record.date, record.description, record.category, formatMoney(record.amount, settings)]) {
             tr.appendChild(makeCell(value, highlightRegex));
         }
 
@@ -54,7 +71,7 @@ function makeCell(text, regex) {
     return td;
 }
 
-export function renderStats(records, cap) {
+export function renderStats(records, settings) {
     const statCount = document.querySelector("#stat-count");
     const statTotal = document.querySelector("#stat-total");
     const statTopCategory = document.querySelector("#stat-top-category");
@@ -62,40 +79,40 @@ export function renderStats(records, cap) {
     const total = getTotal(records);
 
     statCount.textContent = records.length;
-    statTotal.textContent = total.toFixed(2);
+    statTotal.textContent = formatMoney(total, settings);
     statTopCategory.textContent = getTopCategory(records) || "—";
-    statCap.textContent = cap !== null ? cap.toFixed(2) : "—";
-    renderCapMessage(total, cap);
+    statCap.textContent = typeof settings.cap === "number" ? formatMoney(settings.cap, settings) : "Not Set";
 }
 
-export function renderCapMessage(total, cap) {
+export function renderCapMessage(total, settings) {
     const message = document.querySelector(".cap-message");
     if (!message) return;
 
-    if (cap === null) {
+    if (typeof settings.cap !== "number") {
         message.textContent = "";
         message.classList.remove("over-cap");
         return;
     }
 
-    const remaining = cap - total;
-    message.setAttribute("aria-live", "polite");
+    const remaining = settings.cap - total;
 
     if (remaining < 0) {
-        message.textContent = `You are $${Math.abs(remaining).toFixed(2)} over your $${cap.toFixed(2)} cap.`;
+        message.setAttribute("aria-live", "assertive");
+        message.textContent = `You are ${formatMoney(Math.abs(remaining), settings)} over your ${formatMoney(settings.cap, settings)} cap.`;
         message.classList.add("over-cap");
     } else {
-        message.textContent = `You have $${remaining.toFixed(2)} left of your $${cap.toFixed(2)} cap.`;
+        message.setAttribute("aria-live", "polite");
+        message.textContent = `You have ${formatMoney(remaining, settings)} left of your ${formatMoney(settings.cap, settings)} cap.`;
         message.classList.remove("over-cap");
     }
 }
 
-export function renderChart(days) {
+export function renderChart(days, settings) {
     const chartBox = document.querySelector(".chart-box");
     chartBox.textContent = "";
 
     const maxTotal = Math.max(...days.map(day => day.total), 1);
-    const chartHeight = 200;
+    const chartHeight = 150;
 
     for (const day of days) {
         const barContainer = document.createElement("div");
@@ -104,8 +121,7 @@ export function renderChart(days) {
         const bar = document.createElement("div");
         bar.className = "bar";
         bar.style.height = `${(day.total / maxTotal) * chartHeight}px`;
-        bar.setAttribute("title", `$${day.total.toFixed(2)} on ${day.date}`);
-        bar.setAttribute("aria-label", `$${day.total.toFixed(2)} on ${day.date}`);
+        bar.setAttribute("title", `${formatMoney(day.total, settings)} on ${day.date}`);
         barContainer.appendChild(bar);
 
         const label = document.createElement("div");
@@ -114,5 +130,11 @@ export function renderChart(days) {
         barContainer.appendChild(label);
 
         chartBox.appendChild(barContainer);
+    }
+    const actualMaxTotal = days.reduce((max, day) => day.total > max ? day.total : max, 0);
+    if (actualMaxTotal === 0) {
+        chartBox.setAttribute("aria-label", "No spending in the last 7 days.");
+    } else {
+        chartBox.setAttribute("aria-label", `Chart showing spending over the last 7 days. Maximum spending was ${formatMoney(actualMaxTotal, settings)} on ${days.find(d => d.total === actualMaxTotal).date}.`);
     }
 }

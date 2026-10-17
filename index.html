@@ -45,8 +45,9 @@
                     <p id="stat-cap">—</p>
                 </article>
             </div>
-            <div class="chart-box" aria-label="Spending chart" role="img"></div>
             <div class="cap-message" role="status" aria-live="polite"></div>
+            <h3>Spending in the last 7 days</h3>
+            <div class="chart-box" aria-label="Spending chart" role="img"></div>
         </section>
         <section id="records" aria-labelledby="records-heading">
             <h2 id="records-heading">Records</h2>
@@ -122,12 +123,18 @@
                     <p><strong>Base currency:</strong> USD</p>
                 </div>
                 <div class="form-field">
-                    <label for="exchange-rate-rwf">1 USD = <input type="number" id="exchange-rate-rwf"
-                            name="exchange-rate-rwf" min="0.000001" step="any"> RWF</label>
+                    <label for="exchange-rate-rwf">RWF per 1 USD</label>
+                    <input type="text" inputmode="decimal" id="exchange-rate-rwf" name="exchange-rate-rwf"
+                        aria-describedby="exhange-rate-rwf-error">
+                    <p id="exchange-rate-rwf-error" class="error" aria-live="polite">
+                    </p>
                 </div>
                 <div class="form-field">
-                    <label for="exchange-rate-eur">1 USD = <input type="number" id="exchange-rate-eur"
-                            name="exchange-rate-eur" min="0.000001" step="any"> EUR</label>
+                    <label for="exchange-rate-eur">EUR per 1 USD</label>
+                    <input type="text" inputmode="decimal" id="exchange-rate-eur" name="exchange-rate-eur"
+                        aria-describedby="exchange-rate-eur-error">
+                    <p id="exchange-rate-eur-error" class="error" aria-live="polite">
+                    </p>
                 </div>
                 <div class="form-field">
                     <label for="currency">Show amounts in</label>
@@ -141,9 +148,10 @@
             <fieldset>
                 <legend>Spending cap</legend>
                 <div class="form-field">
-                    <label for="spending-cap">Cap amount</label>
-                    <input type="text" inputmode="decimal" id="spending-cap" name="spending-cap">
-                    <p id="spending-cap-error" class="error" aria-live="polite" aria-describedby="spending-cap-error">
+                    <label for="spending-cap">Cap amount (USD)</label>
+                    <input type="text" inputmode="decimal" id="spending-cap" name="spending-cap"
+                        aria-describedby="spending-cap-error">
+                    <p id="spending-cap-error" class="error" aria-live="polite">
                     </p>
                 </div>
             </fieldset>
@@ -177,7 +185,7 @@ Other</textarea>
             <ul>
                 <li>
                     <p>Github: <a href="https://github.com/RyanGakire" target="_blank"
-                            rel="noopener noreferrer">RyanGakire (opens in new tab).</a></p>
+                            rel="noopener noreferrer">RyanGakire (opens in new tab)</a></p>
                 </li>
                 <li>
                     <p>Email: <a href="mailto:r.gakire@alustudent.com">r.gakire@alustudent.com</a></p>

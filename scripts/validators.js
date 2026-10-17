@@ -122,3 +122,17 @@ export function validateImport(data) {
         return "";
     }
 }
+
+export function validateExchangeRate(value) {
+    if (validateAmount(value) !== "") {
+        return "Enter a valid exchange rate.";
+    } else {
+        validateAmount(value);
+    }
+
+    if (parseFloat(value) === 0) {
+        return "Exchange rate cannot be zero.";
+    } else {
+        return "";
+    }
+}
