@@ -107,7 +107,7 @@ function render() {
 			highlight = compileRegex(pattern, flags + "g");
 			emptyMessage = "No matching expenses found.";
 		} else {
-			recordsStatus.textContent = "Invalid search pattern.";
+			showStatus(recordsStatus, "Invalid search pattern.", "error");
 			emptyMessage = "Invalid search pattern.";
 		}
 	} else {
@@ -146,6 +146,12 @@ sortButtons.forEach(button => {
 		render();
 	});
 });
+
+function showStatus(element, text, type) {
+	element.textContent = text;
+	element.classList.toggle("is-success", type === "success");
+	element.classList.toggle("is-error", type === "error");
+}
 
 function showValidationResult(input, error, validator) {
 	const message = validator(input.value);
@@ -205,7 +211,7 @@ function saveEdit(row, id) {
 
 	editingId = null;
 	render();
-	recordsStatus.textContent = "Expense updated.";
+	showStatus(recordsStatus, "Expense updated.", "success");
 }
 
 descriptionInput?.addEventListener("input", () => {
@@ -331,7 +337,7 @@ recordsBody?.addEventListener("click", (event) => {
 		deleteRecord(id);
 		render();
 		if (recordsStatus) {
-			recordsStatus.textContent = "Expense deleted";
+			showStatus(recordsStatus, "Expense deleted.", "success");
 		}
 	} else if (button.classList.contains("edit-button")) {
 		editingId = id;
@@ -341,7 +347,7 @@ recordsBody?.addEventListener("click", (event) => {
 		editingId = null;
 		render();
 		if (recordsStatus) {
-			recordsStatus.textContent = "Edit cancelled."
+			showStatus(recordsStatus, "Edit cancelled.", "success");
 		}
 	} else if (button.classList.contains("save-button")) {
 		saveEdit(button.closest("tr"), id);
@@ -353,7 +359,7 @@ recordsBody?.addEventListener("keydown", (event) => {
 		editingId = null;
 		render();
 		if (recordsStatus) {
-			recordsStatus.textContent = "Edit cancelled.";
+			showStatus(recordsStatus, "Edit cancelled.", "success");
 		}
 	}
 });

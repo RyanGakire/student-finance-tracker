@@ -13,6 +13,12 @@
 	--error: #991b1b;
 }
 
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
 body {
 	margin: 0;
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -116,9 +122,34 @@ fieldset {
 	font-size: 0.875rem;
 }
 
-.over-cap {
+.status-message {
+	padding: 0.5rem 0.75rem;
+	border-left: 4px solid var(--accent);
+	background-color: #f5f0f0;
+	border-radius: 0.25rem;
+	font-weight: 600;
+}
+
+.status-message:empty {
+	display: none;
+}
+
+.status-message.is-success {
+	border-left-color: #166534;
+	background-color: #dcfce7;
+	color: #166534;
+}
+
+.status-message.is-error {
+	border-left-color: var(--error);
+	background-color: #fee2e2;
 	color: var(--error);
-	font-weight: bold;
+}
+
+.over-cap {
+	border-left-color: var(--error);
+	background-color: #fee2e2;
+	color: var(--error);
 }
 
 .chart-box {
@@ -172,6 +203,14 @@ td button+button {
 table {
 	width: 100%;
 	border-collapse: collapse;
+}
+
+caption {
+	caption-side: top;
+	text-align: left;
+	font-size: 1.125rem;
+	font-weight: bold;
+	padding-block: 0.5rem;
 }
 
 th,
@@ -334,6 +373,18 @@ nav ul {
 
 	td[data-label]::before {
 		content: none;
+	}
+
+	.table-scroll {
+		max-height: 28rem;
+		overflow-y: auto;
+	}
+
+	thead th {
+		position: sticky;
+		top: 0;
+		background-color: var(--bg);
+		z-index: 1;
 	}
 }
 

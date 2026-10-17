@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Finance Tracker</title>
+    <title>StuFina Tracker - Student Finance Tracker</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <script src="scripts/main.js" type="module"></script>
@@ -13,7 +13,8 @@
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
     <header>
-        <h1>StuFina Tracker</h1>
+        <h1 class="brand"><img src="assets/android-chrome-512x512.png" alt="" width="40" height="40">StuFina Tracker
+        </h1>
         <nav>
             <ul>
                 <li><a href="#dashboard">Dashboard</a></li>
@@ -45,7 +46,7 @@
                     <p id="stat-cap">—</p>
                 </article>
             </div>
-            <div class="cap-message" role="status" aria-live="polite"></div>
+            <div class="cap-message status-message" role="status" aria-live="polite"></div>
             <h3>Spending in the last 7 days</h3>
             <div class="chart-box" aria-label="Spending chart" role="img"></div>
         </section>
@@ -57,8 +58,8 @@
                 <label for="case-insensitive">Case-insensitive</label>
                 <input type="checkbox" id="case-insensitive" name="case-insensitive">
             </form>
-            <p id="records-status" role="status" aria-live="polite"></p>
-            <div class="table-scroll">
+            <p id="records-status" class="status-message" role="status" aria-live="polite"></p>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Expense records table">
                 <table>
                     <caption>Expense records</caption>
                     <thead>
@@ -112,7 +113,7 @@
                     <p id="expense-amount-error" class="error" aria-live="polite"></p>
                 </div>
                 <button type="submit">Save</button>
-                <p id="status-message" role="status" aria-live="polite"></p>
+                <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
             </form>
         </section>
         <section id="settings" aria-labelledby="settings-heading">
@@ -175,7 +176,7 @@ Other</textarea>
                 <input type="file" id="import-file" name="import-file" accept=".json">
                 <button type="button" id="import-button">Import</button>
                 <button type="button" id="export-button">Export</button>
-                <p id="settings-status" role="status" aria-live="polite"></p>
+                <p id="settings-status" class="status-message" role="status" aria-live="polite"></p>
             </div>
         </section>
         <section id="about" aria-labelledby="about-heading">

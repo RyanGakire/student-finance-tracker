@@ -93,7 +93,7 @@ function makeEditRow(record) {
         ["date", "date", record.date],
         ["description", "text", record.description],
         ["category", "text", record.category],
-        ["amount", "text", formatMoney(record.amount, settings)],
+        ["amount", "text", record.amount.toFixed(2)],
     ];
 
     for (const [name, type, value] of fields) {
