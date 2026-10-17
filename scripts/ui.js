@@ -37,15 +37,20 @@ export function renderTable(records, highlightRegex, emptyMessage, editingId) {
         }
         const tr = document.createElement("tr");
 
-        for (const value of [record.date, record.description, record.category, formatMoney(record.amount, settings)]) {
-            tr.appendChild(makeCell(value, highlightRegex));
+        for (const [label, value] of [["Date", record.date], ["Description", record.description], ["Category", record.category], ["Amount", formatMoney(record.amount, settings)]]) {
+            const cell = makeCell(value, highlightRegex);
+            cell.dataset.label = label;
+            tr.appendChild(cell);
         }
 
         const actionTd = document.createElement("td");
+        actionTd.className = "actions";
+        actionTd.dataset.label = "Actions";
         const editButton = document.createElement("button");
         editButton.className = "edit-button"
         editButton.dataset.id = record.id;
         editButton.textContent = "Edit"
+        editButton.type = "button";
         editButton.setAttribute("aria-label", `Edit expense ${record.description} on ${record.date}`);
         const deleteButton = document.createElement("button");
         deleteButton.className = "delete-button";
@@ -93,6 +98,8 @@ function makeEditRow(record) {
 
     for (const [name, type, value] of fields) {
         const td = document.createElement("td");
+        td.className = "actions";
+        td.dataset.label = name[0].toUpperCase() + name.slice(1);
         const input = document.createElement("input");
         input.type = type;
         input.value = value;
@@ -111,6 +118,8 @@ function makeEditRow(record) {
     }
 
     const actionTd = document.createElement("td");
+    actionTd.className = "actions";
+    actionTd.dataset.label = "Actions";
     const saveButton = document.createElement("button");
     saveButton.className = "save-button";
     saveButton.dataset.id = record.id;

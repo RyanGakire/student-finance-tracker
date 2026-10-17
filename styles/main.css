@@ -161,13 +161,16 @@ button {
 	overflow-x: auto;
 }
 
+.actions {
+	white-space: nowrap;
+}
+
 td button+button {
 	margin-left: 0.5rem;
 }
 
 table {
 	width: 100%;
-	min-width: 44rem;
 	border-collapse: collapse;
 }
 
@@ -184,6 +187,49 @@ th[aria-sort="ascending"] .sort-button::after {
 
 th[aria-sort="descending"] .sort-button::after {
 	content: " ▼";
+}
+
+table,
+thead,
+tbody,
+tr,
+td {
+	display: block;
+}
+
+thead tr {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+thead th {
+	border: 0;
+	padding: 0;
+}
+
+.no-sort {
+	display: none;
+}
+
+tbody tr {
+	background-color: #fff;
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
+	padding: 0.75rem;
+	margin-block: 0.75rem;
+}
+
+tbody td {
+	border: 0;
+	padding: 0.25rem 0;
+}
+
+td[data-label]::before {
+	content: attr(data-label);
+	display: block;
+	font-size: 0.875rem;
+	font-weight: bold;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -247,6 +293,47 @@ nav ul {
 
 	.stat-box {
 		flex-basis: calc(50% - 0.5rem);
+	}
+
+	.no-sort {
+		display: table-cell;
+	}
+
+	table {
+		display: table;
+		min-width: 44rem;
+	}
+
+	thead {
+		display: table-header-group;
+	}
+
+	tbody {
+		display: table-row-group;
+	}
+
+	tr,
+	thead tr {
+		display: table-row;
+	}
+
+	th,
+	td,
+	thead th,
+	tbody td {
+		display: table-cell;
+		border: 1px solid var(--border);
+		padding: 0.5rem;
+	}
+
+	tbody tr {
+		background-color: transparent;
+		border: 0;
+		padding: 0;
+	}
+
+	td[data-label]::before {
+		content: none;
 	}
 }
 
