@@ -35,6 +35,8 @@ import { getLast7Days, getTotal } from "./stats.js";
 
 import { loadSettings, saveSettings } from "./storage.js";
 
+import { setupHeader } from "./header.js";
+
 let settings = loadSettings();
 
 const descriptionInput = document.querySelector("#expense-description");
@@ -436,4 +438,5 @@ importButton?.addEventListener("click", async () => {
 	}
 });
 
+setupHeader();
 render();
