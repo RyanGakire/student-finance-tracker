@@ -103,7 +103,7 @@ function render() {
 		const regex = compileRegex(pattern, flags);
 		if (regex) {
 			records = filterRecords(records, regex);
-			recordsStatus.textContent = `Found ${records.length} matching expense out of ${getRecords().length}.`;
+			showStatus(recordsStatus, `Found ${records.length} matching expense out of ${getRecords().length}.`);
 			highlight = compileRegex(pattern, flags + "g");
 			emptyMessage = "No matching expenses found.";
 		} else {
@@ -195,7 +195,7 @@ function saveEdit(row, id) {
 		const message = validator(input.value);
 		if (message) {
 			input.setAttribute("aria-invalid", "true");
-			recordsStatus.textContent = message;
+			showStatus(recordsStatus, message);
 			input.focus();
 			return;
 		}
