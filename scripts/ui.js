@@ -17,7 +17,7 @@ function formatMoney(amountUSD, settings) {
     }).format(amount);
 }
 
-export function renderTable(records, highlightRegex, emptyMessage) {
+export function renderTable(records, highlightRegex, emptyMessage, editingId) {
     const tBody = document.querySelector("#records tbody");
     tBody.textContent = "";
 
@@ -31,6 +31,10 @@ export function renderTable(records, highlightRegex, emptyMessage) {
         return;
     }
     for (const record of records) {
+        if (record.id === editingId) {
+            tBody.appendChild(makeEditRow(record));
+            continue;
+        }
         const tr = document.createElement("tr");
 
         for (const value of [record.date, record.description, record.category, formatMoney(record.amount, settings)]) {
@@ -38,12 +42,18 @@ export function renderTable(records, highlightRegex, emptyMessage) {
         }
 
         const actionTd = document.createElement("td");
+        const editButton = document.createElement("button");
+        editButton.className = "edit-button"
+        editButton.dataset.id = record.id;
+        editButton.textContent = "Edit"
+        editButton.setAttribute("aria-label", `Edit expense ${record.description} on ${record.date}`);
         const deleteButton = document.createElement("button");
         deleteButton.className = "delete-button";
         deleteButton.dataset.id = record.id;
         deleteButton.textContent = "Delete";
         deleteButton.type = "button";
         deleteButton.setAttribute("aria-label", `Delete expense ${record.description} on ${record.date}`);
+        actionTd.appendChild(editButton);
         actionTd.appendChild(deleteButton);
         tr.appendChild(actionTd);
         tBody.appendChild(tr);
@@ -69,6 +79,52 @@ function makeCell(text, regex) {
     }
     td.append(text.slice(last));
     return td;
+}
+
+function makeEditRow(record) {
+    const tr = document.createElement("tr");
+    tr.className = "editing";
+    const fields = [
+        ["date", "date", record.date],
+        ["description", "text", record.description],
+        ["category", "text", record.category],
+        ["amount", "text", formatMoney(record.amount, settings)],
+    ];
+
+    for (const [name, type, value] of fields) {
+        const td = document.createElement("td");
+        const input = document.createElement("input");
+        input.type = type;
+        input.value = value;
+        input.name = name;
+        input.setAttribute("aria-label", "Edit " + name);
+
+        if (name === "amount") {
+            input.inputMode = "decimal";
+        }
+        if (name === "category") {
+            input.setAttribute("list", "expense-category-options");
+        }
+
+        td.appendChild(input);
+        tr.appendChild(td);
+    }
+
+    const actionTd = document.createElement("td");
+    const saveButton = document.createElement("button");
+    saveButton.className = "save-button";
+    saveButton.dataset.id = record.id;
+    saveButton.textContent = "Save";
+    saveButton.type = "button";
+    const cancelButton = document.createElement("button");
+    cancelButton.className = "cancel-button";
+    cancelButton.textContent = "Cancel";
+    cancelButton.type = "button";
+    actionTd.appendChild(saveButton);
+    actionTd.appendChild(cancelButton);
+    tr.appendChild(actionTd);
+
+    return tr;
 }
 
 export function renderStats(records, settings) {

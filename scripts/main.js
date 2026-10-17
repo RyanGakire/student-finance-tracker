@@ -15,6 +15,7 @@ import {
 	addRecord,
 	deleteRecord,
 	setRecords,
+	updateRecord,
 	sortRecords,
 } from "./state.js";
 
@@ -70,7 +71,7 @@ const currencySelect = document.querySelector("#currency");
 if (capInput) {
 	capInput.value = settings.cap ?? "";
 }
-settings.exchangeRateRwf = settings.exchangeRateRwf ?? { RWF: 1, EUR: 1 };
+settings.exchangeRateRwf = settings.exchangeRateRwf ?? { RWF: 1478.18, EUR: 0.89 };
 settings.currency = settings.currency ?? "USD";
 if (exchangeRateRwfInput) {
 	exchangeRateRwfInput.value = settings.exchangeRateRwf.RWF ?? "";
@@ -80,14 +81,15 @@ if (exchangeRateEurInput) {
 }
 if (currencySelect) {
 	currencySelect.value = settings.currency;
-	if (Array.isArray(settings.categories)) {
-		categoriesInput.value = settings.categories.join("\n");
-		updateCategoryOptions(settings.categories);
-	}
+}
+if (Array.isArray(settings.categories)) {
+	categoriesInput.value = settings.categories.join("\n");
+	updateCategoryOptions(settings.categories)
 }
 
 let sortKey = "date";
 let sortDirection = "desc";
+let editingId = null;
 
 function render() {
 	const pattern = searchInput.value.trim();
@@ -113,7 +115,7 @@ function render() {
 	}
 
 	const sortedRecords = sortRecords(records, sortKey, sortDirection);
-	renderTable(sortedRecords, highlight, emptyMessage);
+	renderTable(sortedRecords, highlight, emptyMessage, editingId);
 
 	sortButtons.forEach(button => {
 		const header = button.closest("th");
@@ -167,6 +169,43 @@ function updateCategoryOptions(categories) {
 		option.value = category;
 		categoryOptions.appendChild(option);
 	}
+}
+
+function saveEdit(row, id) {
+	const dateInput = row.querySelector('[name="date"]');
+	const descriptionInput = row.querySelector('[name="description"]');
+	const categoryInput = row.querySelector('[name="category"]');
+	const amountInput = row.querySelector('[name="amount"]');
+	descriptionInput.value = normalizeDescription(descriptionInput.value);
+
+	const inputs = [
+		[dateInput, validateDate],
+		[descriptionInput, validateDescription],
+		[categoryInput, validateCategory],
+		[amountInput, validateAmount],
+	];
+
+	for (const [input, validator] of inputs) {
+		const message = validator(input.value);
+		if (message) {
+			input.setAttribute("aria-invalid", "true");
+			recordsStatus.textContent = message;
+			input.focus();
+			return;
+		}
+	}
+
+	updateRecord(id, {
+		date: dateInput.value,
+		description: descriptionInput.value,
+		category: categoryInput.value,
+		amount: parseFloat(amountInput.value),
+		updatedAt: new Date().toISOString()
+	});
+
+	editingId = null;
+	render();
+	recordsStatus.textContent = "Expense updated.";
 }
 
 descriptionInput?.addEventListener("input", () => {
@@ -280,15 +319,41 @@ form?.addEventListener("submit", (event) => {
 });
 
 recordsBody?.addEventListener("click", (event) => {
-	if (event.target.classList.contains("delete-button")) {
+	const button = event.target.closest("button");
+	if (!button) {
+		return;
+	}
+	const id = button.dataset.id;
+	if (button.classList.contains("delete-button")) {
 		if (!confirm("Are you sure you want to delete this expense?")) {
 			return;
 		}
-		const id = event.target.dataset.id;
 		deleteRecord(id);
 		render();
 		if (recordsStatus) {
 			recordsStatus.textContent = "Expense deleted";
+		}
+	} else if (button.classList.contains("edit-button")) {
+		editingId = id;
+		render();
+		recordsBody.querySelector(".editing input")?.focus();
+	} else if (button.classList.contains("cancel-button")) {
+		editingId = null;
+		render();
+		if (recordsStatus) {
+			recordsStatus.textContent = "Edit cancelled."
+		}
+	} else if (button.classList.contains("save-button")) {
+		saveEdit(button.closest("tr"), id);
+	}
+});
+
+recordsBody?.addEventListener("keydown", (event) => {
+	if (event.key === "Escape" && editingId !== null) {
+		editingId = null;
+		render();
+		if (recordsStatus) {
+			recordsStatus.textContent = "Edit cancelled.";
 		}
 	}
 });

@@ -36,3 +36,10 @@ export function setRecords(newRecords) {
     records = newRecords;
     save(records);
 }
+
+export function updateRecord(id, changes) {
+    records = records.map(record =>
+        record.id === id ? { ...record, ...changes } : record
+    );
+    save(records);
+}

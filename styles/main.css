@@ -89,7 +89,9 @@ textarea {
 	font: inherit;
 }
 
-[aria-invalid="true"] {
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
 	border-color: var(--error);
 	border-width: 2px;
 }
@@ -159,9 +161,13 @@ button {
 	overflow-x: auto;
 }
 
+td button+button {
+	margin-left: 0.5rem;
+}
+
 table {
 	width: 100%;
-	min-width: 36rem;
+	min-width: 44rem;
 	border-collapse: collapse;
 }
 
