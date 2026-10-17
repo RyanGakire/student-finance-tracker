@@ -60,6 +60,7 @@ const searchForm = document.querySelector("#records form[role='search']");
 const exportButton = document.querySelector("#export-button");
 const settingsStatusMessage = document.querySelector("#settings-status");
 const importButton = document.querySelector("#import-button");
+const categoryOptions = document.querySelector("#expense-category-options");
 const exchangeRateRwfInput = document.querySelector("#exchange-rate-rwf");
 const exchangeRateEurInput = document.querySelector("#exchange-rate-eur");
 const exchangeRateRwfError = document.querySelector("#exchange-rate-rwf-error");
@@ -79,6 +80,10 @@ if (exchangeRateEurInput) {
 }
 if (currencySelect) {
 	currencySelect.value = settings.currency;
+	if (Array.isArray(settings.categories)) {
+		categoriesInput.value = settings.categories.join("\n");
+		updateCategoryOptions(settings.categories);
+	}
 }
 
 let sortKey = "date";
@@ -155,6 +160,15 @@ function showValidationResult(input, error, validator) {
 	return message;
 }
 
+function updateCategoryOptions(categories) {
+	categoryOptions.textContent = "";
+	for (const category of categories) {
+		const option = document.createElement("option");
+		option.value = category;
+		categoryOptions.appendChild(option);
+	}
+}
+
 descriptionInput?.addEventListener("input", () => {
 	if (descriptionWarning) {
 		descriptionWarning.textContent = getDuplicateWordWarning(descriptionInput.value);
@@ -179,7 +193,14 @@ dateInput?.addEventListener("blur", () => {
 });
 
 categoriesInput?.addEventListener("blur", () => {
-	showValidationResult(categoriesInput, categoriesError, validateCategoryList);
+	if (!showValidationResult(categoriesInput, categoriesError, validateCategoryList)) {
+		const list = categoriesInput.value.split("\n").map((line) => line.trim()).filter(Boolean);
+		settings.categories = list;
+		saveSettings(settings);
+		updateCategoryOptions(list);
+		categoriesInput.value = list.join("\n");
+		settingsStatusMessage.textContent = "Categories saved.";
+	}
 });
 
 capInput?.addEventListener("change", () => {
