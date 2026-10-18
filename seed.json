@@ -1,30 +1,30 @@
 [
   {
     "id": "txn_0001",
-    "description": "Lunch at cafeteria",
-    "amount": 12.50,
+    "description": "Lunch at Best Pilau",
+    "amount": 10.5,
     "category": "Food",
     "date": "2026-10-12",
     "createdAt": "2026-10-12T12:15:00.000Z",
-    "updatedAt": "2026-10-12T12:15:00.000Z"
+    "updatedAt": "2026-10-18T12:15:18.428Z"
   },
   {
     "id": "txn_0002",
     "description": "Coffee with friends",
-    "amount": 8.75,
-    "category": "Entertainment",
-    "date": "2026-10-11",
+    "amount": 0.75,
+    "category": "Food",
+    "date": "2026-09-30",
     "createdAt": "2026-10-11T16:40:00.000Z",
-    "updatedAt": "2026-10-11T16:40:00.000Z"
+    "updatedAt": "2026-10-18T12:17:03.892Z"
   },
   {
     "id": "txn_0003",
-    "description": "Bus pass for the the month",
-    "amount": 45,
+    "description": "Taxi motorcycle",
+    "amount": 5,
     "category": "Transport",
     "date": "2026-10-10",
     "createdAt": "2026-10-10T07:05:00.000Z",
-    "updatedAt": "2026-10-10T07:05:00.000Z"
+    "updatedAt": "2026-10-18T12:19:02.780Z"
   },
   {
     "id": "txn_0004",
@@ -36,49 +36,31 @@
     "updatedAt": "2026-10-09T10:30:00.000Z"
   },
   {
-    "id": "txn_0005",
-    "description": "Free campus tea",
-    "amount": 0,
-    "category": "Food",
-    "date": "2026-10-07",
-    "createdAt": "2026-10-07T10:20:00.000Z",
-    "updatedAt": "2026-10-07T10:20:00.000Z"
-  },
-  {
     "id": "txn_0006",
-    "description": "Pens & notebooks <A4 size>",
-    "amount": 6.4,
+    "description": "Agenda, pen, and pencils",
+    "amount": 0,
     "category": "Books",
-    "date": "2026-10-06",
+    "date": "2026-10-13",
     "createdAt": "2026-10-06T14:00:00.000Z",
-    "updatedAt": "2026-10-06T14:00:00.000Z"
+    "updatedAt": "2026-10-18T12:12:25.341Z"
   },
   {
     "id": "txn_0007",
-    "description": "Econometrics textbook (2nd edition)",
+    "description": "Econometrics textbook<><>:( (2nd edition)",
     "amount": 89.99,
     "category": "Books",
     "date": "2026-09-23",
     "createdAt": "2026-09-23T11:45:00.000Z",
-    "updatedAt": "2026-09-23T11:45:00.000Z"
-  },
-  {
-    "id": "txn_0008",
-    "description": "Café latte and croissant",
-    "amount": 0.5,
-    "category": "Food",
-    "date": "2026-09-30",
-    "createdAt": "2026-09-30T08:10:00.000Z",
-    "updatedAt": "2026-09-30T08:10:00.000Z"
+    "updatedAt": "2026-10-18T12:42:04.184Z"
   },
   {
     "id": "txn_0009",
-    "description": "Movie night - \"Late Show\" tickets",
-    "amount": 15,
+    "description": "Netflix Premium subscription",
+    "amount": 9.99,
     "category": "Entertainment",
-    "date": "2026-01-01",
+    "date": "2026-10-16",
     "createdAt": "2026-01-01T21:00:00.000Z",
-    "updatedAt": "2026-01-01T21:00:00.000Z"
+    "updatedAt": "2026-10-18T12:09:53.742Z"
   },
   {
     "id": "txn_0010",
@@ -124,5 +106,14 @@
     "date": "2026-10-11",
     "createdAt": "2026-10-11T18:00:00.000Z",
     "updatedAt": "2026-10-11T18:00:00.000Z"
+  },
+  {
+    "id": "txn_1792257277981",
+    "description": "Microsoft Microsoft Game pass",
+    "category": "Entertainment",
+    "amount": 20,
+    "date": "2026-10-15",
+    "createdAt": "2026-10-17T17:14:37.981Z",
+    "updatedAt": "2026-10-18T12:10:45.549Z"
   }
 ]
