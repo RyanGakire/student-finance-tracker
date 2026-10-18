@@ -1,5 +1,7 @@
+// Importing getTotal and getTopCategory functions from stats.js
 import { getTotal, getTopCategory } from "./stats.js";
 
+// Creating a function that formats the amount basing the exchange rate and currency chosen
 function formatMoney(amountUSD, settings) {
     const currency = settings.currency ?? "USD";
     const exchangeRate = settings.exchangeRateRwf ?? { RWF: 1, EUR: 1 };
@@ -17,6 +19,7 @@ function formatMoney(amountUSD, settings) {
     }).format(amount);
 }
 
+// Creating a function that adjusts the records table based on the number of records and the actions being made
 export function renderTable(records, highlightRegex, emptyMessage, editingId) {
     const tBody = document.querySelector("#records tbody");
     tBody.textContent = "";
@@ -136,6 +139,7 @@ function makeEditRow(record) {
     return tr;
 }
 
+// Creating an export function to render and display the stats at the top of the dashboard.
 export function renderStats(records, settings) {
     const statCount = document.querySelector("#stat-count");
     const statTotal = document.querySelector("#stat-total");
@@ -149,6 +153,7 @@ export function renderStats(records, settings) {
     statCap.textContent = typeof settings.cap === "number" ? formatMoney(settings.cap, settings) : "Not Set";
 }
 
+// Creating an export function for displaying a status message on the cap amount, whether you've exceeded or still under the budget and amount.
 export function renderCapMessage(total, settings) {
     const message = document.querySelector(".cap-message");
     if (!message) return;
@@ -172,6 +177,7 @@ export function renderCapMessage(total, settings) {
     }
 }
 
+// Creating an exported function for rendering and displaying the 7-day bar chart and with some information when hovering a bar.
 export function renderChart(days, settings) {
     const chartBox = document.querySelector(".chart-box");
     chartBox.textContent = "";
@@ -200,6 +206,6 @@ export function renderChart(days, settings) {
     if (actualMaxTotal === 0) {
         chartBox.setAttribute("aria-label", "No spending in the last 7 days.");
     } else {
-        chartBox.setAttribute("aria-label", `Chart showing spending over the last 7 days. Maximum spending was ${formatMoney(actualMaxTotal, settings)} on ${days.find(d => d.total === actualMaxTotal).date}.`);
+        chartBox.setAttribute("aria-label", `Chart showing spending in the last 7 days. Maximum spending was ${formatMoney(actualMaxTotal, settings)} on ${days.find(d => d.total === actualMaxTotal).date}.`);
     }
 }
