@@ -1,3 +1,8 @@
+/*
+Importing functions from validators.js, state.js, ui.js, search.js, stats.js, storage.js,
+and header.js
+*/
+
 import {
 	getDuplicateWordWarning,
 	normalizeDescription,
@@ -93,9 +98,11 @@ let sortKey = "date";
 let sortDirection = "desc";
 let editingId = null;
 
+// Creating an inner function for rendering the stats, chart, and cap message.
 function render() {
 	const pattern = searchInput.value.trim();
 	const flags = caseInsensitiveCheckbox.checked ? "i" : "";
+
 
 	let records = getRecords();
 	let highlight = null;
@@ -149,12 +156,14 @@ sortButtons.forEach(button => {
 	});
 });
 
+// Creating an inner function to show Status message.
 function showStatus(element, text, type) {
 	element.textContent = text;
 	element.classList.toggle("is-success", type === "success");
 	element.classList.toggle("is-error", type === "error");
 }
 
+// Creating an innner function to show validation result message.
 function showValidationResult(input, error, validator) {
 	const message = validator(input.value);
 
@@ -179,6 +188,7 @@ function updateCategoryOptions(categories) {
 	}
 }
 
+// Creating an inner function for saving inline edits.
 function saveEdit(row, id) {
 	const dateInput = row.querySelector('[name="date"]');
 	const descriptionInput = row.querySelector('[name="description"]');
