@@ -1,6 +1,8 @@
+// Creating an export function to help in freezing the header at the top when scrolling through the application
 export function setupHeader() {
 	const header = document.querySelector("header");
 
+	// Creating an inner function that runs document.documentElement.style.setProperty("--header-height", header.offsetHeight + "px");.
 	function updateHeight() {
 		document.documentElement.style.setProperty(
 			"--header-height",
@@ -25,6 +27,7 @@ export function setupHeader() {
 		lastY = y;
 	});
 
+	// adding a "focusin" listener on header that removes header-hidden.
 	header.addEventListener("focusin", () => {
 		document.body.classList.remove("header-hidden");
 	});
