@@ -8,16 +8,15 @@ export function compileRegex(input, flags = 'i') {
     }
 }
 
+// Creating an exported function to filter records based on what's typed in the search bar
 export function filterRecords(records, regex) {
     if (!regex) {
         return records;
     }
 
-    return records.filter(record =>
-        [record.description, record.category, record.date, record.amount.toFixed(2)]
-            .some(value => {
-                regex.lastIndex = 0;
-                return regex.test(String(value));
-            })
+    return records.filter(record => [record.description, record.category, record.date, record.amount.toFixed(2)].some(value => {
+        regex.lastIndex = 0;
+        return regex.test(String(value));
+    })
     );
 }
