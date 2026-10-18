@@ -69,3 +69,6 @@ Double spaces in descriptions are turned into single spaces with `/ {2,}/g`.
 The page runs the tests automatically and shows **PASS** or **FAIL** for each one, with a summary at the bottom (e.g. "Passed 25 out of 25 tests").
 
 The tests check the validation rules for description, amount, date and category, the category list, the repeated-word warning, and the double-space clean-up.
+
+## Developer
+[RyanGakire](https://github.com/RyanGakire)
