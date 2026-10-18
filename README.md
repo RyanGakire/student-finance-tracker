@@ -1,5 +1,9 @@
 <p align="left"><img src="assets/android-chrome-512x512.png" alt="StuFina Tracker logo" width="120"></p>
 
+- [**Live app (Github pages):**](https://ryangakire.github.io/student-finance-tracker/)
+- [**Repository:**](https://github.com/RyanGakire/student-finance-tracker)
+- [**Demo Video:**](https://drive.google.com/file/d/1G0rKNlPysS6CwUqeWTeE-mAOfh-T2ABA/view?usp=drive_link)
+
 # StuFina Tracker - Student Finance Tracker
 This is an expense tracker specifically made for students. You can record and edit transactions/expenses.
 
