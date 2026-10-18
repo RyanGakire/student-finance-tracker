@@ -1,3 +1,4 @@
+// Validation rules to be used
 export const DESCRIPTION_REGEX = /^\S(?:.*\S)?$/;
 export const AMOUNT_REGEX = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
 export const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
