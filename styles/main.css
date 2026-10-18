@@ -12,7 +12,7 @@
 	--border: #d1d5db;
 	--error: #991b1b;
 	--header-height: 0px;
-	--sticky-top: var(var(--header-height));
+	--sticky-top: var(--header-height);
 }
 
 body.header-hidden {
@@ -54,11 +54,13 @@ footer {
 .header-inner,
 .footer-inner {
 	max-width: 70rem;
+	margin-inline: auto;
 }
 
 main {
 	margin-inline: auto;
 	padding-inline: 1rem;
+	max-width: 70rem;
 }
 
 main>section:not(#dashboard) {
@@ -176,6 +178,11 @@ fieldset {
 	margin-block: 0.25rem;
 	color: #854d0e;
 	font-size: 0.875rem;
+}
+
+.error:empty,
+.warning:empty {
+	margin: 0;
 }
 
 .status-message {
@@ -381,6 +388,16 @@ button:focus-visible {
 	text-decoration: underline;
 }
 
+.delete-button:hover,
+.delete-button:focus-visible {
+	background-color: #fee2e2;
+}
+
+.cancel-button:hover,
+.cancel-button:focus-visible {
+	background-color: #f3f4f6;
+}
+
 @media (min-width: 360px) {
 
 	header,
@@ -501,8 +518,17 @@ nav a {
 		flex-basis: calc(25% - 0.75rem);
 	}
 
-	#expense-form fieldset {
+	.settings-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+
+	.settings-grid>fieldset {
 		flex: 1 1 calc(50% - 0.5rem);
+		min-width: 0;
+		margin-block: 0;
 	}
 
 }

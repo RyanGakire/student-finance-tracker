@@ -120,65 +120,68 @@
         </section>
         <section id="settings" aria-labelledby="settings-heading">
             <h2 id="settings-heading">Settings</h2>
-            <fieldset>
-                <legend>Currency and rates</legend>
-                <div class="form-field">
-                    <p><strong>Base currency:</strong> USD</p>
-                </div>
-                <div class="form-field">
-                    <label for="exchange-rate-rwf">RWF per 1 USD</label>
-                    <input type="text" inputmode="decimal" id="exchange-rate-rwf" name="exchange-rate-rwf"
-                        aria-describedby="exhange-rate-rwf-error">
-                    <p id="exchange-rate-rwf-error" class="error" aria-live="polite">
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="exchange-rate-eur">EUR per 1 USD</label>
-                    <input type="text" inputmode="decimal" id="exchange-rate-eur" name="exchange-rate-eur"
-                        aria-describedby="exchange-rate-eur-error">
-                    <p id="exchange-rate-eur-error" class="error" aria-live="polite">
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="currency">Show amounts in</label>
-                    <select id="currency" name="currency">
-                        <option value="USD">USD</option>
-                        <option value="RWF">RWF</option>
-                        <option value="EUR">EUR</option>
-                    </select>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Spending cap</legend>
-                <div class="form-field">
-                    <label for="spending-cap">Cap amount (USD)</label>
-                    <input type="text" inputmode="decimal" id="spending-cap" name="spending-cap"
-                        aria-describedby="spending-cap-error">
-                    <p id="spending-cap-error" class="error" aria-live="polite">
-                    </p>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Categories</legend>
-                <div class="form-field">
-                    <label for="categories">Expense categories</label>
-                    <textarea id="categories" name="categories" rows="5"
-                        aria-describedby="categories-help categories-error">Food
+            <div class="settings-grid">
+                <fieldset>
+                    <legend>Currency and rates</legend>
+                    <div class="form-field">
+                        <p><strong>Base currency:</strong> USD</p>
+                    </div>
+                    <div class="form-field">
+                        <label for="exchange-rate-rwf">RWF per 1 USD</label>
+                        <input type="text" inputmode="decimal" id="exchange-rate-rwf" name="exchange-rate-rwf"
+                            aria-describedby="exhange-rate-rwf-error">
+                        <p id="exchange-rate-rwf-error" class="error" aria-live="polite">
+                        </p>
+                    </div>
+                    <div class="form-field">
+                        <label for="exchange-rate-eur">EUR per 1 USD</label>
+                        <input type="text" inputmode="decimal" id="exchange-rate-eur" name="exchange-rate-eur"
+                            aria-describedby="exchange-rate-eur-error">
+                        <p id="exchange-rate-eur-error" class="error" aria-live="polite">
+                        </p>
+                    </div>
+                    <div class="form-field">
+                        <label for="currency">Show amounts in</label>
+                        <select id="currency" name="currency">
+                            <option value="USD">USD</option>
+                            <option value="RWF">RWF</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Spending cap</legend>
+                    <div class="form-field">
+                        <label for="spending-cap">Cap amount (USD)</label>
+                        <input type="text" inputmode="decimal" id="spending-cap" name="spending-cap"
+                            aria-describedby="spending-cap-error">
+                        <p id="spending-cap-error" class="error" aria-live="polite">
+                        </p>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Categories</legend>
+                    <div class="form-field">
+                        <label for="categories">Expense categories</label>
+                        <textarea id="categories" name="categories" rows="5"
+                            aria-describedby="categories-help categories-error">Food
 Books
 Transport
 Entertainment
 Fees
 Other</textarea>
-                    <p id="categories-help">Enter one category per line. You can edit this list at any time.</p>
-                    <p id="categories-error" class="error" aria-live="polite"></p>
-                </div>
-            </fieldset>
-            <div class="settings-actions">
-                <label for="import-file">Import JSON file</label>
-                <input type="file" id="import-file" name="import-file" accept=".json">
-                <button type="button" id="import-button">Import</button>
-                <button type="button" id="export-button">Export</button>
-                <p id="settings-status" class="status-message" role="status" aria-live="polite"></p>
+                        <p id="categories-help">Enter one category per line. You can edit this list at any time.</p>
+                        <p id="categories-error" class="error" aria-live="polite"></p>
+                    </div>
+                </fieldset>
+                <fieldset class="settings-actions">
+                    <legend>Import and export</legend>
+                    <label for="import-file">Import JSON file</label>
+                    <input type="file" id="import-file" name="import-file" accept=".json">
+                    <button type="button" id="import-button">Import</button>
+                    <button type="button" id="export-button">Export</button>
+                    <p id="settings-status" class="status-message" role="status" aria-live="polite"></p>
+                </fieldset>
             </div>
         </section>
         <section id="about" aria-labelledby="about-heading">
